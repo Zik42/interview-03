@@ -1,13 +1,37 @@
+import { useFilms } from "./hooks/useFilms";
+import { FilmCard } from "./components/FilmCard";
+import { FilmCardSkeleton } from "./components/FilmCardSkeleton";
+
 function App() {
+  const { films, loading, error } = useFilms();
+
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-900 min-w-screen">
-      <div className="p-6 rounded-2xl bg-white shadow-xl">
-        <h1 className="text-3xl font-bold text-blue-600">
-          Tailwind is working 🚀
-        </h1>
-        <p className="mt-2 text-gray-600">
-          If this looks centered, styled, and colorful — you're good.
-        </p>
+    <div className="min-h-screen bg-background min-w-screen">
+      <div className="container mx-auto px-4 py-8">
+        <div className="text-center mb-8">
+          <h1 className="text-4xl font-bold text-foreground mb-2">
+            Star Wars Movies Catalog
+          </h1>
+          <p className="text-muted-foreground">
+            Explore the epic saga of Star Wars films
+          </p>
+        </div>
+
+        {error && (
+          <div className="text-center text-red-500 mb-8">
+            <p>Error loading films: {error}</p>
+          </div>
+        )}
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {loading
+            ? Array.from({ length: 6 }).map((_, index) => (
+                <FilmCardSkeleton key={index} />
+              ))
+            : films.map((film) => (
+                <FilmCard key={film.episode_id} film={film} />
+              ))}
+        </div>
       </div>
     </div>
   );
