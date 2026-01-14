@@ -1,5 +1,6 @@
 import type { Film } from "../types";
-import { Card, CardHeader, CardTitle, CardContent } from "./ui/card";
+import { Card, CardHeader, CardTitle, CardContent, CardFooter } from "./ui/card";
+import { CharacterDialog } from "./CharacterDialog";
 
 interface FilmCardProps {
   film: Film;
@@ -37,6 +38,9 @@ export const FilmCard = ({ film }: FilmCardProps) => {
           </div>
         </div>
       </CardContent>
+      <CardFooter>
+        <CharacterDialog film={film} />
+      </CardFooter>
     </Card>
   );
 };
